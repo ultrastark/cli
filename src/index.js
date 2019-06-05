@@ -27,6 +27,9 @@ const newFolders = [
   {
     path: 'scss',
   },
+  {
+    path: 'scss/base',
+  },
 ]
 
 const newFiles = [
@@ -35,12 +38,19 @@ const newFiles = [
     content:
       "export const VERSION = require('../../../package.json').version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",
   },
+  {
+    path: 'scss/base/_colors.scss',
+    content:
+      '$us-color-settings: (\r\n  primary: (\r\n    base: #3880ff,\r\n  ),\r\n  secondary: (\r\n    base: #0cd1e8,\r\n  ),\r\n  tertiary: (\r\n    base: #7044ff,\r\n  ),\r\n  light: (\r\n    base: #f4f5f8,\r\n  ),\r\n  medium: (\r\n    base: #989aa2,\r\n  ),\r\n  dark: (\r\n    base: #222428,\r\n  ),\r\n);\r\n\r\n$color-darken: 12%;\r\n$color-lighten: 12%;\r\n$color-opacity: 0.3;',
+  },
 ]
 
 // -- Logic --
 const createFolders = (items) => {
   return new Promise((resolve, reject) => {
-    items.forEach((item) => {})
+    items.forEach((item) => {
+      createFolder(item)
+    })
   })
 }
 
@@ -53,6 +63,14 @@ const createFolder = (item) => {
         created(item)
         resolve()
       }
+    })
+  })
+}
+
+const createFiles = (items) => {
+  return new Promise((resolve, reject) => {
+    items.forEach((item) => {
+      createFile(item)
     })
   })
 }
@@ -99,7 +117,7 @@ const help = () => {
 }
 
 const createItems = () => {
-  Promise.all([createFolder(newFolders[0]), createFile(newFiles[0])])
+  Promise.all([createFolders(newFolders), createFiles(newFiles)])
     .then(() => {
       success()
     })
