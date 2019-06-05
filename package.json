@@ -1,0 +1,38 @@
+{
+  "name": "@ultrastark/cli",
+  "version": "0.0.1",
+  "description": "ultrastark cli to bootstrap new angular project",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "bin": {
+    "us": "./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultrastark/cli.git"
+  },
+  "keywords": [
+    "Angular",
+    "CLI",
+    "folder-structure",
+    "Ultrastark"
+  ],
+  "author": "Raphaël Balet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ultrastark/cli/issues"
+  },
+  "homepage": "https://github.com/ultrastark/cli#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "esm": "^3.2.25",
+    "inquirer": "^6.3.1",
+    "shelljs": "^0.8.3"
+  }
+}
