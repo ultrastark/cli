@@ -2,6 +2,7 @@
 
 const chalk = require('chalk')
 const fs = require('fs')
+const replace = require('replace-in-file')
 
 // const askQuestions = () => {
 //   const questions = [
@@ -117,11 +118,49 @@ const deleteFile = (item) => {
   return new Promise((resolve, reject) => {
     fs.unlink(`src/${item.path}`, (err) => {
       if (err) {
-        reject(item)
+        // Already deleted
+        resolve()
       } else {
         deleted(item)
         resolve()
       }
+    })
+  })
+}
+
+// -- update
+const updateTsconfig = () => {
+  return new Promise((resolve) => {
+    const options = {
+      files: 'tsconfig.json',
+      from: /\"baseUrl\": \".\/",/,
+      to: '"baseUrl": "./src",',
+    }
+
+    replace(options, (err) => {
+      if (err) {
+        reject(err)
+      }
+      console.log(`Modified files: ${options.files} from: "baseUrl": "./", to: ${options.to}`)
+      resolve()
+    })
+  })
+}
+
+const updateAngularJson = () => {
+  return new Promise((resolve) => {
+    const options = {
+      files: 'angular.json',
+      from: /src\/styles.scss/,
+      to: 'src/sass/main.scss',
+    }
+
+    replace(options, (err) => {
+      if (err) {
+        reject(err)
+      }
+      console.log(`Modified files: ${options.files} from: "src/styles.scss", to: "${options.to}"`)
+      resolve()
     })
   })
 }
@@ -159,7 +198,13 @@ const help = () => {
 }
 
 const createItems = () => {
-  Promise.all([createFolders(newFolders), createFiles(newFiles), deleteFiles(unlinkedFiles)])
+  Promise.all([
+    createFolders(newFolders),
+    createFiles(newFiles),
+    deleteFiles(unlinkedFiles),
+    updateTsconfig(),
+    updateAngularJson(),
+  ])
     .then(() => {
       success()
     })
