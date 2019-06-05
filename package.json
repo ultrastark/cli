@@ -1,6 +1,6 @@
 {
   "name": "@ultrastark/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ultrastark cli to bootstrap new angular project",
   "main": "src/index.js",
   "scripts": {

@@ -1,4 +1,5 @@
 # US CLI
+**Alpha version**
 
 Change an angular project to
 -  [follow this folder structure](https://github.com/rbalet/us-folder-structure)
