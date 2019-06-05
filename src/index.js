@@ -152,7 +152,7 @@ const updateAngularJson = () => {
     const options = {
       files: 'angular.json',
       from: /src\/styles.scss/,
-      to: 'src/sass/main.scss',
+      to: 'src/scss/main.scss',
     }
 
     replace(options, (err) => {
