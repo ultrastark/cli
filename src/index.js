@@ -43,9 +43,25 @@ const newFiles = [
     content:
       '$us-color-settings: (\r\n  primary: (\r\n    base: #3880ff,\r\n  ),\r\n  secondary: (\r\n    base: #0cd1e8,\r\n  ),\r\n  tertiary: (\r\n    base: #7044ff,\r\n  ),\r\n  light: (\r\n    base: #f4f5f8,\r\n  ),\r\n  medium: (\r\n    base: #989aa2,\r\n  ),\r\n  dark: (\r\n    base: #222428,\r\n  ),\r\n);\r\n\r\n$color-darken: 12%;\r\n$color-lighten: 12%;\r\n$color-opacity: 0.3;',
   },
+  {
+    path: 'scss/_shared.scss',
+    content:
+      "// Base\r\n@import 'base/colors';\r\n\r\n// Us-mixin\r\n@import '~@ultrastark/us-mixin/mixin';",
+  },
+  {
+    path: 'scss/main.scss',
+    content: "// Base\r\n@import 'shared';\r\n@import '~@ultrastark/us-mixin/utilities';",
+  },
+]
+
+const unlinkedFiles = [
+  {
+    path: 'styles.scss',
+  },
 ]
 
 // -- Logic --
+// - folder
 const createFolders = (items) => {
   return new Promise((resolve, reject) => {
     items.forEach((item) => {
@@ -67,6 +83,7 @@ const createFolder = (item) => {
   })
 }
 
+// - Create files
 const createFiles = (items) => {
   return new Promise((resolve, reject) => {
     items.forEach((item) => {
@@ -87,10 +104,35 @@ const createFile = (item) => {
     })
   })
 }
+// - Delete files
+const deleteFiles = (items) => {
+  return new Promise((resolve, reject) => {
+    items.forEach((item) => {
+      deleteFile(item)
+    })
+  })
+}
+
+const deleteFile = (item) => {
+  return new Promise((resolve, reject) => {
+    fs.unlink(`src/${item.path}`, (err) => {
+      if (err) {
+        reject(item)
+      } else {
+        deleted(item)
+        resolve()
+      }
+    })
+  })
+}
 
 // -- Message --
 const notCreated = (item) => {
   console.log(chalk.red.bold(`${item.path} not created`))
+}
+
+const deleted = (item) => {
+  console.log(`${item.path} deleted`)
 }
 
 const created = (item) => {
@@ -117,7 +159,7 @@ const help = () => {
 }
 
 const createItems = () => {
-  Promise.all([createFolders(newFolders), createFiles(newFiles)])
+  Promise.all([createFolders(newFolders), createFiles(newFiles), deleteFiles(unlinkedFiles)])
     .then(() => {
       success()
     })
