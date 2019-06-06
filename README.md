@@ -51,6 +51,8 @@ us init
    -  "baseUrl": "./" -> "baseUrl: "./src"
 -  tsconfig.app.json
    -  "types": [] -> "types": ["node"]
+-  tslint.json
+   -  "app" -> ["page", "component", "fragment", "layout"]
 
 ## Npm installed
 - @types/node

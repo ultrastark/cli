@@ -186,6 +186,23 @@ const updateAngularJson = () => {
     })
   })
 }
+const updateTslint = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      files: 'tslint.json',
+      from: /"app"/g,
+      to: '["page", "component", "fragment", "layout"]',
+    }
+
+    replace(options, (err) => {
+      if (err) {
+        reject(err)
+      }
+      console.log(`Modified files: ${options.files} from: "app", to: "${options.to}"`)
+      resolve()
+    })
+  })
+}
 
 // -- run npm --
 const runNpm = () => {
@@ -248,6 +265,7 @@ const createItems = () => {
     updateTsconfig(),
     updateTsconfigApp(),
     updateAngularJson(),
+    updateTslint(),
     runNpm(),
   ])
     .then(() => {
