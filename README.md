@@ -25,6 +25,8 @@ us init
 ng new PROJECT-NAME
 cd PROJECT-NAME
 us init
+npm i --save @types/node
+npm i --save @ultrastark/us-mixin
 ```
 
 # Change done
