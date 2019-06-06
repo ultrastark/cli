@@ -46,6 +46,7 @@ us init
 ## Changed files
 -  angular.json
    -  src/styles.scss -> src/css/main.scss
+   -  "prefix": "app" -> "prefix": ""
 -  tsconfig.json
    -  "baseUrl": "./" -> "baseUrl: "./src"
 -  tsconfig.app.json
