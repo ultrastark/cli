@@ -3,6 +3,7 @@
 const chalk = require('chalk')
 const fs = require('fs')
 const replace = require('replace-in-file')
+var npm = require('npm')
 
 // const askQuestions = () => {
 //   const questions = [
@@ -147,8 +148,26 @@ const updateTsconfig = () => {
   })
 }
 
-const updateAngularJson = () => {
+const updateTsconfigApp = () => {
   return new Promise((resolve) => {
+    const options = {
+      files: 'tsconfig.app.json',
+      from: /"types": []/,
+      to: '"types": ["node"]',
+    }
+
+    replace(options, (err) => {
+      if (err) {
+        reject(err)
+      }
+      console.log(`Modified files: ${options.files} from: "types": [], to: ${options.to}`)
+      resolve()
+    })
+  })
+}
+
+const updateAngularJson = () => {
+  return new Promise((resolve, reject) => {
     const options = {
       files: 'angular.json',
       from: /src\/styles.scss/,
@@ -161,6 +180,27 @@ const updateAngularJson = () => {
       }
       console.log(`Modified files: ${options.files} from: "src/styles.scss", to: "${options.to}"`)
       resolve()
+    })
+  })
+}
+
+// -- run npm --
+const runNpm = () => {
+  return new Promise((resolve) => {
+    npm.load(function(err) {
+      // handle errors
+
+      npm.commands.install(['@types/node', '@ultrastark/us-mixin'], function(err, data) {
+        if (err) {
+          reject(err)
+        }
+        console.log('@types/node && @ultrastark/us-mixin installed')
+        resolve()
+      })
+
+      npm.on('log', function(message) {
+        console.log(message)
+      })
     })
   })
 }
@@ -203,7 +243,9 @@ const createItems = () => {
     createFiles(newFiles),
     deleteFiles(unlinkedFiles),
     updateTsconfig(),
+    updateTsconfigApp(),
     updateAngularJson(),
+    runNpm(),
   ])
     .then(() => {
       success()

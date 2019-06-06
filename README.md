@@ -25,8 +25,6 @@ us init
 ng new PROJECT-NAME
 cd PROJECT-NAME
 us init
-npm i --save @types/node
-npm i --save @ultrastark/us-mixin
 ```
 
 # Change done
@@ -49,3 +47,9 @@ npm i --save @ultrastark/us-mixin
    -  src/styles.scss -> src/css/main.scss
 -  tsconfig.json
    -  "baseUrl": "./" -> "baseUrl: "./src"
+-  tsconfig.app.json
+   -  "types": [] -> "types": ["node"]
+
+## Npm installed
+- @types/node
+- @ultrastark/us-mixin
