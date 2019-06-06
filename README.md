@@ -32,6 +32,7 @@ us init
 -  app/configs
 -  scss
 -  scss/base
+-  app/shared
 
 ## new files
 -  global.config.ts

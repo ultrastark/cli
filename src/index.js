@@ -27,6 +27,9 @@ const newFolders = [
     path: 'app/configs',
   },
   {
+    path: 'app/shared',
+  },
+  {
     path: 'scss',
   },
   {
