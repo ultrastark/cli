@@ -173,8 +173,12 @@ const updateAngularJson = () => {
   return new Promise((resolve, reject) => {
     const options = {
       files: 'angular.json',
-      from: [/src\/styles.scss/, /"prefix": "app"/],
-      to: ['src/scss/main.scss', '"prefix": ""'],
+      from: [/src\/styles.scss/, /"prefix": "app"/, /"tsConfig": "tsconfig.app.json"/],
+      to: [
+        'src/scss/main.scss',
+        '"prefix": ""',
+        '"tsConfig": "tsconfig.app.json",\r\n"stylePreprocessorOptions": {\r\n"includePaths": ["src/scss"]\r\n}',
+      ],
     }
 
     replace(options, (err) => {

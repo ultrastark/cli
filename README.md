@@ -47,6 +47,9 @@ us init
 -  angular.json
    -  src/styles.scss -> src/css/main.scss
    -  "prefix": "app" -> "prefix": ""
+   -  "" ->   "stylePreprocessorOptions": {
+                "includePaths": ["src/scss"]
+              },
 -  tsconfig.json
    -  "baseUrl": "./" -> "baseUrl: "./src"
 -  tsconfig.app.json
