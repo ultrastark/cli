@@ -265,6 +265,34 @@ const updateAppComponentTs = () => {
   })
 }
 
+const updateAppModule = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      files: 'src/app/app.module.ts',
+      from: [/'@angular\/core'/, /imports: \[/],
+      to: [
+        "'@angular/core'\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations'",
+        'imports: [\r\nBrowserAnimationsModule,',
+      ],
+    }
+
+    fs.readFile(options.files, function(err, data) {
+      if (err) throw err
+      if (!data.includes('BrowserAnimationsModule')) {
+        replace(options, (err) => {
+          if (err) {
+            reject(err)
+          }
+          console.log(`Modified files: ${options.files} from: "", to: "${options.to}"`)
+          resolve()
+        })
+      } else {
+        reject('File already init')
+      }
+    })
+  })
+}
+
 // -- run npm --
 const runNpm = () => {
   return new Promise((resolve) => {
@@ -350,7 +378,7 @@ const help = () => {
 }
 
 const addSplashScreen = () => {
-  Promise.all([updateIndexHtml(), updateAppComponentTs(), npmSplashScreen()])
+  Promise.all([updateIndexHtml(), updateAppComponentTs(), npmSplashScreen(), updateAppModule()])
     .then(() => {
       success()
     })
