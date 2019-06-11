@@ -291,10 +291,7 @@ const npmSplashScreen = () => {
     npm.load(function(err) {
       // handle errors
 
-      npm.commands.install(['@ultrastark/us-splash-screen', '@angular/animations'], function(
-        err,
-        data,
-      ) {
+      npm.commands.install(['@ultrastark/us-splash-screen'], function(err, data) {
         if (err) {
           reject(err)
         }
