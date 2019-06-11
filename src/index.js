@@ -190,6 +190,7 @@ const updateAngularJson = () => {
     })
   })
 }
+
 const updateTslint = () => {
   return new Promise((resolve, reject) => {
     const options = {
@@ -208,6 +209,62 @@ const updateTslint = () => {
   })
 }
 
+const updateIndexHtml = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      files: 'src/index.html',
+      from: [/<\/head>/, /<body>/],
+      to: [
+        '<!-- US Splash Screen css-->\r\n<link rel="stylesheet" type="text/css"\r\nhref="https://ultrastark.ch/assets/splash-screen/splash-screen.css"\r\n/>\r\n</head>',
+        '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
+      ],
+    }
+
+    fs.readFile(options.files, function(err, data) {
+      if (err) throw err
+      if (!data.includes('us-splash-screen')) {
+        replace(options, (err) => {
+          if (err) {
+            reject(err)
+          }
+          console.log(`Modified files: ${options.files} from: "", to: "${options.to}"`)
+          resolve()
+        })
+      } else {
+        reject('File already init')
+      }
+    })
+  })
+}
+
+const updateAppComponentTs = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      files: 'src/app/app.component.ts',
+      from: [/'@angular\/core'/, /AppComponent {/],
+      to: [
+        "'@angular/core'\r\nimport { UsSplashScreenService } from '@ultrastark/us-splash-screen'",
+        'AppComponent {\r\nconstructor(private _usSplashScreenService: UsSplashScreenService) {}\r\n',
+      ],
+    }
+
+    fs.readFile(options.files, function(err, data) {
+      if (err) throw err
+      if (!data.includes('UsSplashScreenService')) {
+        replace(options, (err) => {
+          if (err) {
+            reject(err)
+          }
+          console.log(`Modified files: ${options.files} from: "", to: "${options.to}"`)
+          resolve()
+        })
+      } else {
+        reject('File already init')
+      }
+    })
+  })
+}
+
 // -- run npm --
 const runNpm = () => {
   return new Promise((resolve) => {
@@ -219,6 +276,26 @@ const runNpm = () => {
           reject(err)
         }
         console.log('@types/node && @ultrastark/us-mixin installed')
+        resolve()
+      })
+
+      npm.on('log', function(message) {
+        console.log(message)
+      })
+    })
+  })
+}
+
+const npmSplashScreen = () => {
+  return new Promise((resolve) => {
+    npm.load(function(err) {
+      // handle errors
+
+      npm.commands.install(['@ultrastark/us-splash-screen'], function(err, data) {
+        if (err) {
+          reject(err)
+        }
+        console.log('@ultrastark/us-splash-screen installed')
         resolve()
       })
 
@@ -256,9 +333,31 @@ const unknownCommand = (command) => {
   )
 }
 
+const unknownAddCommand = (command) => {
+  console.error(
+    `The "us ${command}" command requires a name argument to be specified eg. ng add [name] . For more details, use "us help".`,
+  )
+}
+
 // -- Methode --
 const help = () => {
-  console.log('init: format angular project')
+  console.log(
+    chalk.white.bold('us init') +
+      ': format angular project\r\n' +
+      chalk.white.bold('us add splash-screen') +
+      ': Add splash-screen to the project',
+  )
+}
+
+const addSplashScreen = () => {
+  Promise.all([updateIndexHtml(), updateAppComponentTs(), npmSplashScreen()])
+    .then(() => {
+      success()
+    })
+    .catch((err) => {
+      notCreated(err)
+      error()
+    })
 }
 
 const createItems = () => {
@@ -296,6 +395,18 @@ const run = async () => {
       } else {
         console.log(chalk.red.bold('You need to be in an Angular project'))
         error()
+      }
+      break
+
+    case 'add':
+      switch (args[1]) {
+        case ('spl', 'splash', 'splash-screen'):
+          addSplashScreen()
+          break
+
+        default:
+          args[1] ? unknownCommand(args[1]) : unknownAddCommand(args[0])
+          break
       }
       break
 

@@ -18,6 +18,7 @@ npm install -g @ultrastark/cli
 ```
 us help
 us init
+us add splash-screen
 ```
 
 ## Adapting a new angular project to the us convention
