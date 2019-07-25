@@ -215,7 +215,7 @@ const updateIndexHtml = () => {
       files: 'src/index.html',
       from: [/<\/head>/, /<body>/],
       to: [
-        '<!-- US Splash Screen css-->\r\n<link\r\nrel="preload"\r\nas="style"\r\nonload="this.rel = \'stylesheet\'"\r\nhref="https://assets.ultrastark.ch/splash-screen/splash-screen.css"\r\n/>\r\n<noscript>\r\n<link rel="stylesheet" href="https://assets.ultrastark.ch/splash-screen/splash-screen.css" />\r\n</noscript>\r\n</head>',
+        '<!-- US Splash Screen css-->\r\n<link\r\nrel="preload"\r\nas="style"\r\nonload="this.rel = \'stylesheet\'\r\n"onerror="this.rel=\'stylesheet\'"\r\nhref="https://assets.ultrastark.ch/splash-screen/splash-screen.css"\r\n/>\r\n<noscript>\r\n<link rel="stylesheet" href="https://assets.ultrastark.ch/splash-screen/splash-screen.css" />\r\n</noscript>\r\n</head>',
         '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
       ],
     }
