@@ -185,7 +185,7 @@ const updateTsconfigApp = () => {
   return new Promise((resolve) => {
     const options = {
       files: 'tsconfig.app.json',
-      from: /"types": []/,
+      from: /"types": \[\]/g,
       to: '"types": ["node"]',
     }
 
