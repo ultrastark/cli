@@ -71,7 +71,7 @@ const newFiles = [
   {
     path: 'app/configs/global.config.ts',
     content:
-      "export const VERSION = require('../../../package.json').version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",
+      "import { version } from '../../../package.json'\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",
   },
   {
     path: 'scss/base/_colors.scss',
@@ -176,24 +176,6 @@ const updateTsconfig = () => {
         reject(err)
       }
       console.log(`Modified files: ${options.files} from: "baseUrl": "./", to: ${options.to}`)
-      resolve()
-    })
-  })
-}
-
-const updateTsconfigApp = () => {
-  return new Promise((resolve) => {
-    const options = {
-      files: 'tsconfig.app.json',
-      from: /"types": \[\]/g,
-      to: '"types": ["node"]',
-    }
-
-    replace(options, (err) => {
-      if (err) {
-        reject(err)
-      }
-      console.log(`Modified files: ${options.files} from: "types": [], to: ${options.to}`)
       resolve()
     })
   })
@@ -329,11 +311,11 @@ const runNpm = () => {
     npm.load(function(err) {
       // handle errors
 
-      npm.commands.install(['@types/node', '@ultrastark/us-mixin'], function(err, data) {
+      npm.commands.install(['@ultrastark/us-mixin'], function(err, data) {
         if (err) {
           reject(err)
         }
-        console.log('@types/node && @ultrastark/us-mixin installed')
+        console.log('@ultrastark/us-mixin installed')
         resolve()
       })
 
@@ -424,7 +406,6 @@ const createItems = () => {
     createFiles(newFiles),
     deleteFiles(unlinkedFiles),
     updateTsconfig(),
-    updateTsconfigApp(),
     updateAngularJson(),
     updateTslint(),
     runNpm(),
