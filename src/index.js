@@ -137,8 +137,28 @@ const updateTsconfig = () => {
   return new Promise((resolve) => {
     const options = {
       files: 'tsconfig.json',
-      from: /\"baseUrl\": \".\/",/,
-      to: '"baseUrl": "./src",',
+      from: [/\"baseUrl\": \".\/",/, 'es2015"'],
+      to: [
+        '"baseUrl": "./src",',
+        'es2015"\r\n"' +
+          '"resolveJsonModule": true,\r\n' +
+          '"esModuleInterop": true,\r\n' +
+          'paths: {\r\n' +
+          '"@app/* : ["app/*"],\r\n' +
+          '"@pages/* : ["app/pages/*"],\r\n' +
+          '"@configs/* : ["app/configs/*"],\r\n' +
+          '"@bases/* : ["app/core/bases/*"],\r\n' +
+          '"@guards/* : ["app/core/guards/*"],\r\n' +
+          '"@store/* : ["app/core/store/*"],\r\n' +
+          '"@models/* : ["app/core/models/*"],\r\n' +
+          '"@services/* : ["app/core/services/*"],\r\n' +
+          '"@providers/* : ["app/core/providers/*"],\r\n' +
+          '"@fragments/* : ["app/shared/fragments/*"],\r\n' +
+          '"@layouts/* : ["app/shared/layouts/*"],\r\n' +
+          '"@components/* : ["app/shared/components/*"],\r\n' +
+          '"@pipes/* : ["app/shared/pipes/*"]\r\n' +
+          '},\r\n',
+      ],
     }
 
     replace(options, (err) => {
