@@ -34,6 +34,16 @@ us init
 -  scss
 -  scss/base
 -  app/shared
+-  app/shared/layouts
+-  app/shared/components
+-  app/shared/fragments
+-  app/shared/pipes
+-  app/core
+-  app/core/guards
+-  app/core/directives
+-  app/core/services
+-  app/core/bases
+-  app/core/models
 
 ## new files
 -  global.config.ts
