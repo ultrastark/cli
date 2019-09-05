@@ -44,6 +44,10 @@ us init
 -  app/core/services
 -  app/core/bases
 -  app/core/models
+-  app/assets/fonts
+-  app/assets/i18n
+-  app/assets/icons
+-  app/assets/images
 
 ## new files
 -  global.config.ts
