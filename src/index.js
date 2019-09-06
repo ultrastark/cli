@@ -174,7 +174,6 @@ const updateTsconfig = () => {
           '"resolveJsonModule": true,\r\n' +
           '"esModuleInterop": true,\r\n' +
           'paths: {\r\n' +
-          '"@app/* : ["app/*"],\r\n' +
           '"@pages/* : ["app/pages/*"],\r\n' +
           '"@configs/* : ["app/configs/*"],\r\n' +
           '"@bases/* : ["app/core/bases/*"],\r\n' +
@@ -183,10 +182,11 @@ const updateTsconfig = () => {
           '"@models/* : ["app/core/models/*"],\r\n' +
           '"@services/* : ["app/core/services/*"],\r\n' +
           '"@providers/* : ["app/core/providers/*"],\r\n' +
+          '"@components/* : ["app/shared/components/*"],\r\n' +
           '"@fragments/* : ["app/shared/fragments/*"],\r\n' +
           '"@layouts/* : ["app/shared/layouts/*"],\r\n' +
-          '"@components/* : ["app/shared/components/*"],\r\n' +
           '"@pipes/* : ["app/shared/pipes/*"]\r\n' +
+          '"@app/* : ["app/*"],\r\n' +
           '},\r\n',
       ],
     }

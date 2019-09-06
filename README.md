@@ -67,8 +67,6 @@ us init
               },
 -  tsconfig.json
    -  "baseUrl": "./" -> "baseUrl: "./src"
--  tsconfig.app.json
-   -  "types": [] -> "types": ["node"]
 -  tslint.json
    -  "app" -> ["page", "component", "fragment", "layout"]
 
