@@ -51,6 +51,9 @@ us init
 
 ## new files
 -  global.config.ts
+-  core/models/core.enums.ts
+-  core/models/core.interfaces.ts
+-  core/models/core.models.ts
 -  scss/base/_colors.scss
 -  scss/_shared.scss
 -  scss/main.scss
