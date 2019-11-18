@@ -69,6 +69,11 @@ const newFolders = [
 
 const newFiles = [
   {
+    path: "../.prettierrc",
+    content:
+      '{\r\n"printWidth": 80,\r\n"singleQuote": true,\r\n"trailingComma": "all",\r\n"semi": false,\r\n"arrowParens": "always"\r\n}'
+  },
+  {
     path: "app/configs/global.config.ts",
     content:
       "import { version } from '../../../package.json'\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'"
@@ -186,7 +191,7 @@ const updateTsconfig = () => {
         'es2015",\r\n' +
           '"resolveJsonModule": true,\r\n' +
           '"esModuleInterop": true,\r\n' +
-          '"paths": {\r\n"' +
+          '"paths": {\r\n' +
           '"@pages/*" : ["app/pages/*"],\r\n' +
           '"@configs/*" : ["app/configs/*"],\r\n' +
           '"@bases/*" : ["app/core/bases/*"],\r\n' +
@@ -198,9 +203,9 @@ const updateTsconfig = () => {
           '"@components/*" : ["app/shared/components/*"],\r\n' +
           '"@fragments/*" : ["app/shared/fragments/*"],\r\n' +
           '"@layouts/*" : ["app/shared/layouts/*"],\r\n' +
-          '"@pipes/*" : ["app/shared/pipes/*"]\r\n' +
+          '"@pipes/*" : ["app/shared/pipes/*"],\r\n' +
           '"@app/*" : ["app/*"],\r\n' +
-          "},\r\n"
+          "}\r\n"
       ]
     };
 
