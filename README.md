@@ -73,7 +73,11 @@ us init
    -  "baseUrl": "./" -> "baseUrl: "./src"
 -  tslint.json
    -  "app" -> ["page", "component", "fragment", "layout"]
+   -  "extends": "tslint:recommended" -> "extends": "tslint-config-standard-plus"
+   -  "trailing-comma": false -> "trailing-comma": [true, { "multiline": "always", "singleline": "never" }]
+   -  '' -> "max-line-length": [true, 100],
 
 ## Npm installed
 - @types/node
 - @ultrastark/us-mixin
+- tslint-config-standard-plus (dev)
