@@ -74,11 +74,6 @@ const newFiles = [
       '{\r\n"printWidth": 100,\r\n"singleQuote": true,\r\n"trailingComma": "all",\r\n"semi": false,\r\n"arrowParens": "always"\r\n}',
   },
   {
-    path: '../tslint.json',
-    content:
-      '{\r\n"extends": ["tslint-config-standard-plus"],\r\n"rules": {\r\n"trailing-comma": [true, { "multiline": "always", "singleline": "never" }],\r\n"space-before-function-paren": [true, "never"],\r\n"max-line-length": [true, 100],\r\n"directive-selector": [\r\ntrue,\r\n"attribute",\r\n["page", "component", "fragment", "layout"],\r\n"camelCase"\r\n],\r\n"component-selector": [\r\ntrue,\r\n"element",\r\n["page", "component", "fragment", "layout"],\r\n"kebab-case"\r\n]\r\n}\r\n}',
-  },
-  {
     path: 'app/configs/global.config.ts',
     content:
       "import { version } from '../../../package.json'\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",
@@ -92,7 +87,7 @@ const newFiles = [
     content: '// export interface SideNavigation {}',
   },
   {
-    path: 'app/coremodels/core.models.ts',
+    path: 'app/core/models/core.models.ts',
     content: '// export class Session { constructor(){} }',
   },
   {
@@ -114,9 +109,6 @@ const newFiles = [
 const unlinkedFiles = [
   {
     path: 'styles.scss',
-  },
-  {
-    path: '../tslint.json',
   },
 ]
 
@@ -252,8 +244,13 @@ const updateTslint = () => {
   return new Promise((resolve, reject) => {
     const options = {
       files: 'tslint.json',
-      from: /"app"/g,
-      to: '["page", "component", "fragment", "layout"]',
+      from: [/"app"/g, 'tslint:recommended', '"trailing-comma": false', 140],
+      to: [
+        '["page", "component", "fragment", "layout"]',
+        'tslint-config-standard-plus',
+        '"trailing-comma": [true, { "multiline": "always", "singleline": "never" }],\r\n"space-before-function-paren": [true, "never"]',
+        100,
+      ],
     }
 
     replace(options, (err) => {
