@@ -71,7 +71,12 @@ const newFiles = [
   {
     path: "../.prettierrc",
     content:
-      '{\r\n"printWidth": 80,\r\n"singleQuote": true,\r\n"trailingComma": "all",\r\n"semi": false,\r\n"arrowParens": "always"\r\n}'
+      '{\r\n"printWidth": 100,\r\n"singleQuote": true,\r\n"trailingComma": "all",\r\n"semi": false,\r\n"arrowParens": "always"\r\n}'
+  },
+  {
+    path: "../tslint.json",
+    content:
+      '{\r\n"extends": ["tslint-config-standard-plus"],\r\n"rules": {\r\n"trailing-comma": [true, { "multiline": "always", "singleline": "never" }],\r\n"space-before-function-paren": [true, "never"],\r\n"max-line-length": [true, 100],\r\n"directive-selector": [\r\ntrue,\r\n"attribute",\r\n["page", "component", "fragment", "layout"],\r\n"camelCase"\r\n],\r\n"component-selector": [\r\ntrue,\r\n"element",\r\n["page", "component", "fragment", "layout"],\r\n"kebab-case"\r\n]\r\n}\r\n}'
   },
   {
     path: "app/configs/global.config.ts",
@@ -79,15 +84,15 @@ const newFiles = [
       "import { version } from '../../../package.json'\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'"
   },
   {
-    path: "app/models/core.enums.ts",
+    path: "app/core/models/core.enums.ts",
     content: "export enum RoutesEnum {}"
   },
   {
-    path: "app/models/core.interfaces.ts",
+    path: "app/core/models/core.interfaces.ts",
     content: "// export interface SideNavigation {}"
   },
   {
-    path: "app/models/core.models.ts",
+    path: "app/core/models/core.models.ts",
     content: "// export class Session { constructor(){} }"
   },
   {
@@ -110,6 +115,9 @@ const newFiles = [
 const unlinkedFiles = [
   {
     path: "styles.scss"
+  },
+  {
+    path: "../tslint.json"
   }
 ];
 
@@ -362,22 +370,13 @@ const updateAppModule = () => {
 // -- run npm --
 const runNpm = () => {
   return new Promise(resolve => {
-    npm.load(function(err) {
-      // handle errors
-
-      npm.commands.install(["@ultrastark/us-mixin"], function(err, data) {
-        if (err) {
-          reject(err);
-        }
-        console.log("@ultrastark/us-mixin installed as dependency");
-        // console.log("tslint-config-standard-plus installed as devDependency"); , "tslint-config-standard-plus -d"
-        resolve();
-      });
-
-      npm.on("log", function(message) {
-        console.log(message);
-      });
-    });
+    var exec = require("child_process").exec;
+    child = exec("npm i @ultrastark/us-mixin@latest").stderr.pipe(
+      process.stderr
+    );
+    child = exec("npm i tslint-config-standard-plus --save-dev").stderr.pipe(
+      process.stderr
+    );
   });
 };
 
@@ -467,9 +466,9 @@ const addSplashScreen = () => {
 
 const createItems = () => {
   Promise.all([
+    deleteFiles(unlinkedFiles),
     createFolders(newFolders),
     createFiles(newFiles),
-    deleteFiles(unlinkedFiles),
     updateTsconfig(),
     updateAngularJson(),
     updateTslint(),

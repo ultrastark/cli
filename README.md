@@ -50,7 +50,8 @@ us init
 -  app/assets/images
 
 ## new files
--  global.config.ts
+-  .prettierrc
+-  app/configs/global.config.ts
 -  core/models/core.enums.ts
 -  core/models/core.interfaces.ts
 -  core/models/core.models.ts
