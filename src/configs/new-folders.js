@@ -4,6 +4,9 @@ Object.defineProperty(exports, 'items', {
       path: 'app/configs',
     },
     {
+      path: 'app/pages',
+    },
+    {
       path: 'app/shared',
     },
     {
