@@ -265,9 +265,42 @@ const updateAppModule = () => {
 // -- run npm --
 const runNpm = () => {
   return new Promise((resolve) => {
-    var exec = require('child_process').exec
-    child = exec('npm i @ultrastark/us-mixin@latest').stderr.pipe(process.stderr)
-    child = exec('npm i tslint-config-standard-plus --save-dev').stderr.pipe(process.stderr)
+    npm.load(function(err) {
+      // handle errors
+
+      npm.commands.install(['@ultrastark/us-mixin'], function(err, data) {
+        if (err) {
+          reject(err)
+        }
+        console.log('@ultrastark/us-mixin installed as dependency')
+        // console.log("tslint-config-standard-plus installed as devDependency"); , "tslint-config-standard-plus -d"
+        resolve()
+      })
+
+      npm.on('log', function(message) {
+        console.log(message)
+      })
+    })
+  })
+}
+const runNpmDev = () => {
+  return new Promise((resolve) => {
+    npm.load({ 'save-dev': true }, function(err) {
+      // handle errors
+
+      npm.commands.install(['tslint-config-standard-plus'], function(err, data) {
+        if (err) {
+          reject(err)
+        }
+        console.log('tslint-config-standard-plus as dev dependency')
+        // console.log("tslint-config-standard-plus installed as devDependency"); , "tslint-config-standard-plus -d"
+        resolve()
+      })
+
+      npm.on('log', function(message) {
+        console.log(message)
+      })
+    })
   })
 }
 
@@ -354,6 +387,7 @@ const createItems = () => {
     updateAngularJson(),
     updateTslint(),
     runNpm(),
+    runNpmDev(),
   ])
     .then(() => {
       success()
