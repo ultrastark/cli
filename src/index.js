@@ -118,6 +118,7 @@ const updateTsconfig = () => {
           '"@fragments/*" : ["app/shared/fragments/*"],\r\n' +
           '"@layouts/*" : ["app/shared/layouts/*"],\r\n' +
           '"@pipes/*" : ["app/shared/pipes/*"],\r\n' +
+          '"@shared/*" : ["app/shared/*"],\r\n' +
           '"@app/*" : ["app/*"],\r\n' +
           '}\r\n',
       ],
