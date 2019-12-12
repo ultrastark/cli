@@ -6,6 +6,11 @@ Object.defineProperty(exports, 'items', {
         '{\r\n"printWidth": 100,\r\n"singleQuote": true,\r\n"trailingComma": "all",\r\n"semi": false,\r\n"arrowParens": "always"\r\n}',
     },
     {
+      path: '.htaccess',
+      content:
+        'RewriteEngine On\r\n\r\nRewriteCond %{HTTPS}  !=on\r\nRewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]\r\n# If an existing asset or directory is requested go to it as it is\r\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]\r\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d\r\n# Go to it as is\r\nRewriteRule ^ - [L]\r\n\r\n# If the requested resource doesn\'t exist, use index.html\r\nRewriteRule ^ /index.html\r\n\r\nSetOutputFilter DEFLATE\r\nAddOutputFilterByType DEFLATE "application/atom+xml" "application/javascript" "application/json" "application/ld+json" "application/manifest+json" "application/rdf+xml" "application/rss+xml" "application/schema+json" "application/vnd.geo+json" "application/vnd.ms-fontobject" "application/x-font-ttf" "application/x-javascript" "application/x-web-app-manifest+json" "application/xhtml+xml" "application/xml" "font/eot" "font/opentype" "image/bmp" "image/svg+xml" "image/vnd.microsoft.icon" "image/x-icon" "text/cache-manifest" "text/css" "text/html" "text/javascript" "text/plain" "text/vcard" "text/vnd.rim.location.xloc" "text/vtt" "text/x-component" "text/x-cross-domain-policy" "text/xml"',
+    },
+    {
       path: 'app/configs/global.config.ts',
       content:
         "import { version } from '../../../package.json'\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",

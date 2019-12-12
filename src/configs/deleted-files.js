@@ -3,6 +3,9 @@ Object.defineProperty(exports, 'items', {
     {
       path: 'styles.scss',
     },
+    {
+      path: '.htaccess',
+    },
   ],
   enumerable: true,
   writable: false,

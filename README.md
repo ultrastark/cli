@@ -63,6 +63,7 @@ us init
 -  styles.scss
 
 ## Changed files
+- .htaccess
 -  angular.json
    -  src/styles.scss -> src/css/main.scss
    -  "prefix": "app" -> "prefix": ""
