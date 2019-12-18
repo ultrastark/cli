@@ -1,13 +1,13 @@
 # US CLI
-**Alpha version**
+**Beta version**
 
 Change an angular project to
--  [follow this folder structure](https://github.com/rbalet/us-folder-structure)
-- [help work with these mixins](https://github.com/ultrastark/us-mixin)
+-  [follow this folder structure](https://docs.ultrastark.ch/docs/en/standards/dev/angular/folder-structure/)
+-  [help work with these mixins](https://github.com/ultrastark/us-mixin)
 
 # Installation
 
-## Install Globablly
+## Install Globally
 
 ```
 npm install -g @ultrastark/cli
@@ -80,5 +80,5 @@ us init
 
 ## Npm installed
 - @types/node
-- @ultrastark/us-mixin
-- tslint-config-standard-plus (dev)
+- @ultrastark/us-mixin // generate class and global css variables
+- tslint-config-standard-plus (dev) // tslint formater
