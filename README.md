@@ -2,18 +2,18 @@
 **Beta version**
 
 Change an angular project to
--  [follow this folder structure](https://docs.ultrastark.ch/docs/en/standards/dev/angular/folder-structure/)
+-  [follow this folder structure](https://docs.ultrastark.ch/docs/en/standards/dev/angular/folder-structure/#structure)
 -  [help work with these mixins](https://github.com/ultrastark/us-mixin)
 
-# Installation
+## Installation
 
-## Install Globally
+### Install Globally
 
 ```
 npm install -g @ultrastark/cli
 ```
 
-# Usage
+## Command
 
 ```
 us help
@@ -21,15 +21,15 @@ us init
 us add splash-screen
 ```
 
-## Adapting a new angular project to the us convention
-```
-ng new PROJECT-NAME
-cd PROJECT-NAME
-us init
+### Adapting a new angular project to the us convention
+```c
+ng new PROJECT-NAME // If you didn't already did it
+cd PROJECT-NAME // Be into the root of the project
+us init // It will format and create the right folder structure
 ```
 
-# Change done
-## new folders
+## Change done
+### new folders
 -  app/configs
 -  scss
 -  scss/base
@@ -49,20 +49,21 @@ us init
 -  app/assets/icons
 -  app/assets/images
 
-## new files
+### new files
 -  .prettierrc
 -  app/configs/global.config.ts
 -  core/models/core.enums.ts
 -  core/models/core.interfaces.ts
 -  core/models/core.models.ts
+-  core/models/core.type.ts
 -  scss/base/_colors.scss
 -  scss/_shared.scss
 -  scss/main.scss
 
-## deleted files
+### deleted files
 -  styles.scss
 
-## Changed files
+### Changed files
 - .htaccess
 -  angular.json
    -  src/styles.scss -> src/css/main.scss
@@ -78,7 +79,7 @@ us init
    -  "trailing-comma": false -> "trailing-comma": [true, { "multiline": "always", "singleline": "never" }]
    -  '' -> "max-line-length": [true, 100],
 
-## Npm installed
+### Npm installed
 - @types/node
 - @ultrastark/us-mixin // generate class and global css variables
 - tslint-config-standard-plus (dev) // tslint formater

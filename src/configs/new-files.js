@@ -20,6 +20,10 @@ Object.defineProperty(exports, 'items', {
       content: 'export enum RoutesEnum {}',
     },
     {
+      path: 'app/core/models/core.type.ts',
+      content: "// type ModalSaveAction = 'save' | 'delete'",
+    },
+    {
       path: 'app/core/models/core.interfaces.ts',
       content: '// export interface SideNavigation {}',
     },
