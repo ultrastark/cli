@@ -20,7 +20,7 @@ Object.defineProperty(exports, 'items', {
       content: 'export enum RoutesEnum {}',
     },
     {
-      path: 'app/core/models/core.type.ts',
+      path: 'app/core/models/core.types.ts',
       content: "// type ModalSaveAction = 'save' | 'delete'",
     },
     {

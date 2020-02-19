@@ -55,7 +55,7 @@ us init // It will format and create the right folder structure
 -  core/models/core.enums.ts
 -  core/models/core.interfaces.ts
 -  core/models/core.models.ts
--  core/models/core.type.ts
+-  core/models/core.types.ts
 -  scss/base/_colors.scss
 -  scss/_shared.scss
 -  scss/main.scss
