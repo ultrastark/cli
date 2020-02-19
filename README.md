@@ -2,7 +2,7 @@
 **Beta version**
 
 Change an angular project to
--  [follow this folder structure](https://docs.ultrastark.ch/docs/en/standards/dev/angular/folder-structure/#structure)
+-  [follow this folder structure](https://docs.ultrastark.ch/docs/standards/dev/angular/folder-structure)
 -  [help work with these mixins](https://github.com/ultrastark/us-mixin)
 
 ## Installation
