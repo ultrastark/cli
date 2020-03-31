@@ -28,7 +28,7 @@ Object.defineProperty(exports, 'items', {
       path: 'app/core/guards',
     },
     {
-      path: 'app/core/directives',
+      path: 'app/core/interceptor',
     },
     {
       path: 'app/core/services',
