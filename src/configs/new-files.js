@@ -13,7 +13,7 @@ Object.defineProperty(exports, 'items', {
     {
       path: 'app/configs/global.config.ts',
       content:
-        "import { version } from '../../../package.json'\r\n\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'",
+        "import { version } from '../../../package.json'\r\n\r\nexport const VERSION = version\r\nexport const BASEURL = 'https://api-baseurl.ch/'\r\n\r\nexport const InterceptorSkip = 'X-Skip-Interceptor'\r\nexport const InterceptorSkipHeader = new HttpHeaders({\r\n  'X-Skip-Interceptor': '',\r\n})",
     },
     {
       path: 'app/core/models/core.enums.ts',
