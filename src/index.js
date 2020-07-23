@@ -188,11 +188,11 @@ const updateIndexHtml = () => {
       from: [/<\/head>/, /<body>/],
       to: [
         '<!-- US Splash Screen css-->\r\n<link\r\nrel="preload"\r\nas="style"\r\nonload="this.rel = \'stylesheet\'\r\n"onerror="this.rel=\'stylesheet\'"\r\nhref="https://assets.ultrastark.ch/splash-screen/splash-screen.css"\r\n/>\r\n<noscript>\r\n<link rel="stylesheet" href="https://assets.ultrastark.ch/splash-screen/splash-screen.css" />\r\n</noscript>\r\n</head>',
-        '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
+        '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- <div class="logo">\r\n<img src="assets/images/logo.svg" alt="logo" />\r\n</div> -->\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
       ],
     }
 
-    fs.readFile(options.files, function(err, data) {
+    fs.readFile(options.files, function (err, data) {
       if (err) throw err
       if (!data.includes('us-splash-screen')) {
         replace(options, (err) => {
@@ -220,7 +220,7 @@ const updateAppComponentTs = () => {
       ],
     }
 
-    fs.readFile(options.files, function(err, data) {
+    fs.readFile(options.files, function (err, data) {
       if (err) throw err
       if (!data.includes('UsSplashScreenService')) {
         replace(options, (err) => {
@@ -248,7 +248,7 @@ const updateAppModule = () => {
       ],
     }
 
-    fs.readFile(options.files, function(err, data) {
+    fs.readFile(options.files, function (err, data) {
       if (err) throw err
       if (!data.includes('BrowserAnimationsModule')) {
         replace(options, (err) => {
@@ -268,10 +268,10 @@ const updateAppModule = () => {
 // -- run npm --
 const runNpm = () => {
   return new Promise((resolve) => {
-    npm.load(function(err) {
+    npm.load(function (err) {
       // handle errors
 
-      npm.commands.install(['@ultrastark/us-mixin'], function(err, data) {
+      npm.commands.install(['@ultrastark/us-mixin'], function (err, data) {
         if (err) {
           reject(err)
         }
@@ -280,7 +280,7 @@ const runNpm = () => {
         resolve()
       })
 
-      npm.on('log', function(message) {
+      npm.on('log', function (message) {
         console.log(message)
       })
     })
@@ -288,10 +288,10 @@ const runNpm = () => {
 }
 const runNpmDev = () => {
   return new Promise((resolve) => {
-    npm.load({ 'save-dev': true }, function(err) {
+    npm.load({ 'save-dev': true }, function (err) {
       // handle errors
 
-      npm.commands.install(['tslint-config-standard-plus'], function(err, data) {
+      npm.commands.install(['tslint-config-standard-plus'], function (err, data) {
         if (err) {
           reject(err)
         }
@@ -300,7 +300,7 @@ const runNpmDev = () => {
         resolve()
       })
 
-      npm.on('log', function(message) {
+      npm.on('log', function (message) {
         console.log(message)
       })
     })
@@ -309,10 +309,10 @@ const runNpmDev = () => {
 
 const npmSplashScreen = () => {
   return new Promise((resolve) => {
-    npm.load(function(err) {
+    npm.load(function (err) {
       // handle errors
 
-      npm.commands.install(['@ultrastark/us-splash-screen'], function(err, data) {
+      npm.commands.install(['@ultrastark/us-splash-screen'], function (err, data) {
         if (err) {
           reject(err)
         }
@@ -320,7 +320,7 @@ const npmSplashScreen = () => {
         resolve()
       })
 
-      npm.on('log', function(message) {
+      npm.on('log', function (message) {
         console.log(message)
       })
     })
