@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const { exec } = require('child_process')
 const chalk = require('chalk')
 const fs = require('fs')
 const replace = require('replace-in-file')
@@ -296,7 +297,9 @@ const updateAppModule = () => {
 }
 
 // -- run npm --
-const runNpm = () => {
+const runNpm = async () => {
+  await runNpmLint()
+  await runNpmPrettier()
   return new Promise((resolve) => {
     npm.load(function (err) {
       // handle errors
@@ -304,9 +307,10 @@ const runNpm = () => {
       npm.commands.install(['@ultrastark/us-mixin'], function (err, data) {
         if (err) {
           reject(err)
+        } else {
+          console.log('@ultrastark/us-mixin installed as dependency')
+          resolve()
         }
-        console.log('@ultrastark/us-mixin installed as dependency')
-        resolve()
       })
 
       npm.on('log', function (message) {
@@ -316,42 +320,43 @@ const runNpm = () => {
   })
 }
 
-const runNpmDev = () => {
+const runNpmLint = () => {
+  return new Promise((resolve) => {
+    npm.load({ 'save-dev': true }, function (err) {
+      // handle errors
+      npm.commands.install(['tslint-config-standard-plus'], function (err, data) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+
+      npm.on('log', function (message) {
+        console.log(message)
+      })
+    })
+  })
+}
+
+const runNpmPrettier = () => {
   return new Promise((resolve) => {
     npm.load({ 'save-dev': true }, function (err) {
       // handle errors
 
-      console.log('downloading dev-dependencies')
-      npm.commands.install(['tslint-config-standard-plus', 'prettier'], function (err, data) {
+      npm.commands.install(['prettier'], function (err, data) {
         if (err) {
           reject(err)
         }
 
-        console.log('tslint-config-standard-plus as dev-dependency')
-        console.log('prettier as dev-dependency')
-        resolve()
-      })
-
-      npm.on('log', function (message) {
-        console.log(message)
-      })
-    })
-  })
-}
-
-const runNpmCommand = () => {
-  return new Promise((resolve) => {
-    npm.load(function (err) {
-      // handle errors
-
-      console.log('formating code')
-
-      npm.commands['run-script'](['format-global'], function (err, data) {
-        if (err) {
-          reject(err)
-        }
-        console.log('code formatted')
-        resolve()
+        exec('npm run format-global', (err, stdout, stderr) => {
+          console.log(err, stdout, stderr)
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
       })
 
       npm.on('log', function (message) {
@@ -445,18 +450,9 @@ const createItems = () => {
     updateAngularJson(),
     updateTslint(),
     runNpm(),
-    runNpmDev(),
   ])
     .then(() => {
-      console.log('here running command')
-      runNpmCommand()
-        .then(() => {
-          success()
-        })
-        .catch((err) => {
-          notCreated(err)
-          error()
-        })
+      success()
     })
     .catch((err) => {
       notCreated(err)
