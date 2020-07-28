@@ -111,13 +111,12 @@ const updateTsconfig = () => {
           '"@configs/*" : ["app/configs/*"],\r\n' +
           '"@bases/*" : ["app/core/bases/*"],\r\n' +
           '"@guards/*" : ["app/core/guards/*"],\r\n' +
-          '"@store/*" : ["app/core/store/*"],\r\n' +
           '"@models/*" : ["app/core/models/*"],\r\n' +
           '"@services/*" : ["app/core/services/*"],\r\n' +
-          '"@providers/*" : ["app/core/providers/*"],\r\n' +
           '"@components/*" : ["app/shared/components/*"],\r\n' +
           '"@fragments/*" : ["app/shared/fragments/*"],\r\n' +
           '"@layouts/*" : ["app/shared/layouts/*"],\r\n' +
+          '"@modals/*": ["app/shared/modals/*"],\r\n' +
           '"@pipes/*" : ["app/shared/pipes/*"],\r\n' +
           '"@vendors/*" : ["app/shared/vendors/*"],\r\n' +
           '"@shared/*" : ["app/shared/*"],\r\n' +
@@ -136,15 +135,46 @@ const updateTsconfig = () => {
   })
 }
 
+const updatePackageJson = () => {
+  return new Promise((resolve, reject) => {
+    const options = {
+      files: 'package.json',
+      from: [/"ng": "ng"/, /"start": "ng serve"/, /"build": "ng build"/, /"e2e": "ng e2e"/],
+      to: [
+        '"serve": "ng serve"',
+        '"serve-dev-prod": "ng serve --configuration=devProduction",\r\n"serve-prod": "ng serve --configuration=production"',
+        '"build-prod": "ng build --prod"',
+        '"e2e": "ng e2e",\r\n"ng-version": "ng version",\r\n"format-global": "prettier --write \\"./**/*.{js,jsx,json}\\""',
+      ],
+    }
+
+    replace(options, (err) => {
+      if (err) {
+        reject(err)
+      }
+      console.log(`Modified files: ${options.files} from: "src/styles.scss", to: "${options.to}"`)
+      resolve()
+    })
+  })
+}
+
 const updateAngularJson = () => {
   return new Promise((resolve, reject) => {
     const options = {
       files: 'angular.json',
-      from: [/src\/styles.scss/, /"prefix": "app"/, /"tsConfig": "tsconfig.app.json"/],
+      from: [
+        /src\/styles.scss/,
+        /"prefix": "app"/,
+        /"tsConfig": "tsconfig.app.json"/,
+        /"configurations": {/g,
+        /"configurations": {\r\n"dev-production": {\r\n"browserTarget": "test-cli:build:dev-production"\r\n},/,
+      ],
       to: [
         'src/scss/main.scss',
         '"prefix": ""',
         '"tsConfig": "tsconfig.app.json",\r\n"stylePreprocessorOptions": {\r\n"includePaths": ["src/scss"]\r\n}',
+        '"configurations": {\r\n"dev-production": {\r\n"browserTarget": "test-cli:build:dev-production"\r\n},',
+        '"configurations": {\r\n"dev-production": {\r\n"fileReplacements": [\r\n{\r\n"replace": "src/environments/environment.ts",\r\n"with": "src/environments/environment.dev-prod.ts"\r\n}\r\n]},',
       ],
     }
 
@@ -188,7 +218,7 @@ const updateIndexHtml = () => {
       from: [/<\/head>/, /<body>/],
       to: [
         '<!-- US Splash Screen css-->\r\n<link\r\nrel="preload"\r\nas="style"\r\nonload="this.rel = \'stylesheet\'\r\n"onerror="this.rel=\'stylesheet\'"\r\nhref="https://assets.ultrastark.ch/splash-screen/splash-screen.css"\r\n/>\r\n<noscript>\r\n<link rel="stylesheet" href="https://assets.ultrastark.ch/splash-screen/splash-screen.css" />\r\n</noscript>\r\n</head>',
-        '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- <div class="logo">\r\n<img src="assets/images/logo.svg" alt="logo" />\r\n</div> -->\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
+        '<body>\r\n<!-- US Splash Screen -->\r\n<us-splash-screen id="us-splash-screen">\r\n<div class="center">\r\n<!-- <div class="logo">\r\n<img src="assets/icons/logo.svg" alt="logo" />\r\n</div> -->\r\n<!-- Material Design Spinner -->\r\n<div class="spinner-wrapper">\r\n<div class="spinner">\r\n<div class="inner">\r\n<div class="gap"></div>\r\n<div class="left">\r\n<div class="half-circle"></div>\r\n</div>\r\n<div class="right">\r\n<div class="half-circle"></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- / Material Design Spinner -->\r\n</div>\r\n</us-splash-screen>\r\n<!-- / US Splash Screen -->\r\n\r\n',
       ],
     }
 
@@ -276,7 +306,6 @@ const runNpm = () => {
           reject(err)
         }
         console.log('@ultrastark/us-mixin installed as dependency')
-        // console.log("tslint-config-standard-plus installed as devDependency"); , "tslint-config-standard-plus -d"
         resolve()
       })
 
@@ -286,17 +315,42 @@ const runNpm = () => {
     })
   })
 }
+
 const runNpmDev = () => {
   return new Promise((resolve) => {
     npm.load({ 'save-dev': true }, function (err) {
       // handle errors
 
-      npm.commands.install(['tslint-config-standard-plus'], function (err, data) {
+      console.log('downloading dev-dependencies')
+      npm.commands.install(['tslint-config-standard-plus', 'prettier'], function (err, data) {
         if (err) {
           reject(err)
         }
-        console.log('tslint-config-standard-plus as dev dependency')
-        // console.log("tslint-config-standard-plus installed as devDependency"); , "tslint-config-standard-plus -d"
+
+        console.log('tslint-config-standard-plus as dev-dependency')
+        console.log('prettier as dev-dependency')
+        resolve()
+      })
+
+      npm.on('log', function (message) {
+        console.log(message)
+      })
+    })
+  })
+}
+
+const runNpmCommand = () => {
+  return new Promise((resolve) => {
+    npm.load(function (err) {
+      // handle errors
+
+      console.log('formating code')
+
+      npm.commands['run-script'](['format-global'], function (err, data) {
+        if (err) {
+          reject(err)
+        }
+        console.log('code formatted')
         resolve()
       })
 
@@ -387,13 +441,22 @@ const createItems = () => {
     createFolders(newFolders),
     createFiles(newFiles),
     updateTsconfig(),
+    updatePackageJson(),
     updateAngularJson(),
     updateTslint(),
     runNpm(),
     runNpmDev(),
   ])
     .then(() => {
-      success()
+      console.log('here running command')
+      runNpmCommand()
+        .then(() => {
+          success()
+        })
+        .catch((err) => {
+          notCreated(err)
+          error()
+        })
     })
     .catch((err) => {
       notCreated(err)

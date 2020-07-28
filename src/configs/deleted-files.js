@@ -6,6 +6,12 @@ Object.defineProperty(exports, 'items', {
     {
       path: '.htaccess',
     },
+    {
+      path: 'environments/environment.ts',
+    },
+    {
+      path: 'environments/environment.prod.ts',
+    },
   ],
   enumerable: true,
   writable: false,
